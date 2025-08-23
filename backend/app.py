@@ -5,6 +5,7 @@ from logging.handlers import RotatingFileHandler
 from common import constants
 from common.iftt import IftttEvent
 from common.telegram import TelegramNotification
+from common.signal import SignalNotification
 import RPi.GPIO as GPIO
 import atexit
 import signal
@@ -66,6 +67,18 @@ try:
         tg_opened_event = None     # type: TelegramNotification
         tg_closed_event = None     # type: TelegramNotification
         tg_warning_event = None    # type: TelegramNotification
+    if config['SIGNAL_SERVICE']:
+        logger.info('Creating Signal events')
+        sig_changed_event = SignalNotification(config['SIGNAL_SERVICE'], config['SIGNAL_GROUP_ID'], config['SIGNAL_NUMBER'], "Garage Door Changed", logger)
+        sig_opened_event = SignalNotification(config['SIGNAL_SERVICE'], config['SIGNAL_GROUP_ID'], config['SIGNAL_NUMBER'], "Garage Door Opened", logger)
+        sig_closed_event = SignalNotification(config['SIGNAL_SERVICE'], config['SIGNAL_GROUP_ID'], config['SIGNAL_NUMBER'], "Garage Door Closed", logger)
+        sig_warning_event = SignalNotification(config['SIGNAL_SERVICE'], config['SIGNAL_GROUP_ID'], config['SIGNAL_NUMBER'], "Garage Door Still Open", logger)
+    else:
+        logger.info('No Signal service provided. No events will be raised.')
+        sig_changed_event = None    # type: SignalNotification
+        sig_opened_event = None     # type: SignalNotification
+        sig_closed_event = None     # type: SignalNotification
+        sig_warning_event = None    # type: SignalNotification
 
     # Set up GPIO using BCM numbering
     logger.info('Setting GPIO numbering')
