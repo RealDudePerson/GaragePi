@@ -15,13 +15,13 @@ class TelegramNotification:
         if logger is None:
             raise Exception("Logger is missing!")
         if not telegram_key:
-            logger.debug('IFTT: NO Telegram bot key provided')
+            logger.debug('Telegram: NO Telegram bot key provided')
             raise Exception("NO Telegram bot key provided!")
         if not telegram_chat_id:
-            logger.debug('IFTT: NO Telegram_chat_id provided')
+            logger.debug('Telegram: NO Telegram_chat_id provided')
             raise Exception("NO Telegram chat id provided!")
         if not event_name:
-            logger.debug('IFTT: NO event name provided')
+            logger.debug('Telegram: NO event name provided')
             raise Exception("NO event name provided!")
         logger.info('Created TelegramNotification object %s' %(event_name))
         self.telegram_key = telegram_key
