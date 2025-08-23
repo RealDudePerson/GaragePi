@@ -10,6 +10,7 @@ from common import constants
 from common.db import GarageDb
 from common.iftt import IftttEvent
 from common.telegram import TelegramNotification
+from common.signal import SignalNotification
 from webserver.client_api import GaragePiClient
 import time
 import csv
@@ -224,5 +225,19 @@ def test_telegram():
     app.logger.debug("Testing Telegram with %s and %s" % (telegram_key,telegram_chat_id))
 
     event = TelegramNotification(telegram_key, telegram_chat_id, "Test notification from GaragePi", app.logger)
+    event.trigger()
+    return redirect(url_for('show_control'))
+
+@app.route('/test_signal')
+def test_signal():
+    if not app.debug: return 'Only available when debug is set to True in application config.'
+    signal_service = str(app.config['SIGNAL_SERVICE'])
+    signal_group_id = str(app.config['SIGNAL_GROUP_ID'])
+    signal_number = str(app.config['SIGNAL_NUMBER'])
+    if not signal_service: return 'No Signal key provided!'
+    app.logger.debug("signal_service %s" % (signal_service,))
+    app.logger.debug("signal_group_id %s" % (signal_group_id))
+    app.logger.debug("signal_number %s" % (signal_number))
+    event = SignalNotification(signal_service, signal_group_id, signal_number, "Test notification from GaragePi", app.logger)
     event.trigger()
     return redirect(url_for('show_control'))
