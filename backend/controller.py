@@ -118,14 +118,17 @@ class GaragePiController:
                 change = 'opened'
                 specific_event = app.opened_event
                 tg_specific_event = app.tg_opened_event
+                sig_specific_event = app.sig_opened_event
             else:
                 change = 'closed'
                 specific_event = app.closed_event
                 tg_specific_event = app.tg_closed_event
+                sig_specific_event = app.sig_closed_event
 
             if app.changed_event is not None: app.changed_event.trigger(change)
             if specific_event is not None: specific_event.trigger()
             if tg_specific_event is not None: tg_specific_event.trigger()
+            if sig_specific_event is not None: sig_specific_event.trigger()
 
         app.logger.info("door {0} (pin {1} is {2})".format("OPENED" if new_state else "CLOSED", pin_changed, new_state))
 
