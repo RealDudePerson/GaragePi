@@ -19,7 +19,7 @@ front end. All these are new to me so forgive / correct any noob mistakes.
 
 #### Aug 2025 Update - Added Signal Notifications
 
-GaragePi now supports Telegram notifications. Setup Signal CLI Rest API with https://github.com/bbernhard/signal-cli-rest-api
+GaragePi now supports Signal notifications. Setup Signal CLI Rest API with https://github.com/bbernhard/signal-cli-rest-api
 Once setup, add the server details to app.cfg and get signal notifications.
 
 
